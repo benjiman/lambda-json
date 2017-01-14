@@ -2,6 +2,13 @@ package com.benjiweber.json;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.*;
 
 public class JSONTest {
@@ -42,6 +49,41 @@ public class JSONTest {
             );
 
         assertEquals(15, result);
+    }
+
+    @Test
+    public void simple_array_extraction() {
+        String input = "{ \"ids\": [ 1111, 2222, 3333 ] } ";
+
+        List<Integer> result = JSON.parse(input)
+            .map((Integer[] ids) -> asList(ids));
+
+        assertEquals(asList(1111, 2222, 3333), result);
+    }
+
+    @Test
+    public void string_array_extraction() {
+        String input = "{ \"greetings\": [ \"hello\", \"world\" ] } ";
+
+        List<String> result = JSON.parse(input)
+            .map((String[] greetings) -> asList(greetings));
+
+        assertEquals(asList("hello", "world"), result);
+    }
+
+    @Test
+    public void nested_array_extraction() {
+        String input = "{ \"people\": [ { \"name\": \"benji\" } , { \"name\": \"bob\" } ] } ";
+
+        List<String> result = JSON.parse(input)
+            .map((JSON[] people) ->
+                Stream.of(people)
+                    .map(person ->
+                        person.map((String name) -> name)
+                    ).collect(toList())
+            );
+
+        assertEquals(asList("benji", "bob"), result);
     }
 
     @Test
@@ -129,6 +171,10 @@ public class JSONTest {
                 assertEquals("order", goodbye);
                 assertEquals("waiting", still);
             });
+    }
+
+    public static <T> T[] array(T... ts) {
+        return ts;
     }
 
 }

@@ -54,3 +54,29 @@ String result = JSON.parse(input)
 assertEquals("1111_benji_weber", result);
 
 ```
+
+extract arrays is possible too
+
+```java
+String input = "{ \"ids\": [ 1111, 2222, 3333 ] } ";
+
+List<Integer> result = JSON.parse(input)
+    .map((Integer[] ids) -> asList(ids));
+
+assertEquals(asList(1111, 2222, 3333), result);
+```
+
+as are nested objects in arrays
+```
+String input = "{ \"people\": [ { \"name\": \"benji\" } , { \"name\": \"bob\" } ] } ";
+
+List<String> result = JSON.parse(input)
+    .map((JSON[] people) ->
+        Stream.of(people)
+            .map(person ->
+                person.map((String name) -> name)
+            ).collect(toList())
+    );
+
+assertEquals(asList("benji", "bob"), result);
+```
