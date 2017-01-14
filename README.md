@@ -1,6 +1,6 @@
 # lambda-json
 
-Proof of concept using lambda functions to extract values from JSON
+Exploring an idea of using lambda functions to extract values from JSON
 
 ```java
 String input = "{ \"id\": 1111, \"name\": \"Kat\" }";
