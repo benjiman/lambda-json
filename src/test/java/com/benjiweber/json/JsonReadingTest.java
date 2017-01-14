@@ -11,7 +11,7 @@ import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.*;
 
-public class JSONTest {
+public class JsonReadingTest {
 
     @Test
     public void simple_example() {
@@ -29,8 +29,8 @@ public class JSONTest {
     public void aliasing() {
         String input = "{ \"id\": 1111, \"name\": \"Kat\", \"favourite number\": 10}";
 
-        String result = JSON.parse(input)
-            .aliasing(num -> "favourite number")
+        String result = JSON.aliasing(num -> "favourite number")
+            .parse(input)
             .map((id, name, num) ->
                   id + "_" + name + "_" + num
             );
@@ -89,8 +89,8 @@ public class JSONTest {
     @Test
     public void extract_typed() {
         String input = "{ \"id\": 1111, \"name\": \"Kat\", \"favourite number\": 10}";
-        String result = JSON.parse(input)
-            .aliasing(num -> "favourite number")
+        String result = JSON.aliasing(num -> "favourite number")
+            .parse(input)
             .map((Integer id, String name, Integer num) ->
                     (id + 5) + "_" + name + "_" + (num + 5)
             );
@@ -112,8 +112,8 @@ public class JSONTest {
     @Test
     public void extract_typed_floating_point() {
         String input = "{ \"id\": 1111, \"name\": \"Kat\", \"favourite number\": 10}";
-        String result = JSON.parse(input)
-            .aliasing(num -> "favourite number")
+        String result = JSON.aliasing(num -> "favourite number")
+            .parse(input)
             .map((Double id, String name, Double num) ->
                     (id + 5) + "_" + name + "_" + (num + 5)
             );

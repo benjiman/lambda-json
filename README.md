@@ -1,6 +1,32 @@
 # lambda-json
 
-Exploring an idea of using lambda functions to extract values from JSON
+Exploring an idea of using Java lambda functions to read and write JSON
+
+## Writing JSON
+
+```java
+JSON json = $(
+   people -> $(
+       $(
+           name -> "benji",
+           num -> 10,
+           likes -> $("star", "trek", 2)
+       ),
+       $(
+           name -> "bertie",
+           num -> 4,
+           likes -> $("jam", "bread")
+       )
+   )
+);
+
+assertEquals(
+   "{\"people\":[{\"name\":\"benji\",\"num\":10,\"likes\":[\"star\",\"trek\",2]},{\"name\":\"bertie\",\"num\":4,\"likes\":[\"jam\",\"bread\"]}]}",
+   json.toString()
+);
+```
+
+## Reading JSON
 
 ```java
 String input = "{ \"id\": 1111, \"name\": \"Kat\" }";

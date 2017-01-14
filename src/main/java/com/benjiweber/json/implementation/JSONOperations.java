@@ -5,16 +5,13 @@ import com.benjiweber.json.tuples.*;
 
 import javax.json.JsonObject;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 
 public class JSONOperations implements JSON {
 
     private final JsonObject json;
-    private Map<String, String> aliases;
+    private final Namer aliases;
 
     public JSONOperations(JsonObject json) {
         this(json, emptyList());
@@ -22,11 +19,7 @@ public class JSONOperations implements JSON {
 
     public JSONOperations(JsonObject json, List<KeyAlias> aliases) {
         this.json = json;
-        this.aliases = aliases.stream().collect(Collectors.toMap(KeyAlias::name, KeyAlias::value));
-    }
-
-    public JSONOperations aliasing(KeyAlias... aliases) {
-        return new JSONOperations(json, asList(aliases));
+        this.aliases = new Namer(aliases);
     }
 
     public <T> void to(UniTuple<T> tuple) {
@@ -61,6 +54,15 @@ public class JSONOperations implements JSON {
     }
 
     private String aliased(String name) {
-        return aliases.getOrDefault(name, name);
+        return aliases.name(name);
+    }
+
+    @Override
+    public String toString() {
+        return json.toString();
+    }
+
+    public final JsonObject unwrap() {
+        return json;
     }
 }
