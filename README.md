@@ -21,7 +21,7 @@ String input = "{ \"id\": 1111, \"name\": \"Kat\", \"favourite number\": 10}";
 String result = JSON.parse(input)
     .aliasing(num -> "favourite number")
     .map((id, name, num) ->
-          id + "_" + name + "_" + num
+        id + "_" + name + "_" + num
     );
 
 assertEquals("1111_Kat_10", result);
@@ -34,7 +34,7 @@ String input = "{ \"id\": 10 }";
 
 int result = JSON.parse(input)
     .map((Integer id) ->
-            id + 5
+        id + 5
     );
 
 assertEquals(15, result);
@@ -47,9 +47,9 @@ and hence extract nested values
 
 String input = "{ \"id\": 1111, \"names\": { \"first\": \"benji\", \"last\": \"weber\" } }";
 String result = JSON.parse(input)
-        .map((String id, JSON names) ->
-                id + "_" + names.map((first, last) -> first + "_" + last)
-        );
+    .map((String id, JSON names) ->
+        id + "_" + names.map((first, last) -> first + "_" + last)
+    );
 
 assertEquals("1111_benji_weber", result);
 
