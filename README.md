@@ -55,7 +55,7 @@ assertEquals("1111_benji_weber", result);
 
 ```
 
-extract arrays is possible too
+extracting arrays is possible too
 
 ```java
 String input = "{ \"ids\": [ 1111, 2222, 3333 ] } ";
