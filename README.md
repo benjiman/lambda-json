@@ -44,10 +44,10 @@ Where the json keys are not valid java identifiers we can alias them
 ```java
 String input = "{ \"id\": 1111, \"name\": \"Kat\", \"favourite number\": 10}";
 
-String result = JSON.parse(input)
-    .aliasing(num -> "favourite number")
+String result = JSON.aliasing(num -> "favourite number")
+    .parse(input)
     .map((id, name, num) ->
-        id + "_" + name + "_" + num
+          id + "_" + name + "_" + num
     );
 
 assertEquals("1111_Kat_10", result);
