@@ -67,7 +67,7 @@ assertEquals(asList(1111, 2222, 3333), result);
 ```
 
 as are nested objects in arrays
-```
+```java
 String input = "{ \"people\": [ { \"name\": \"benji\" } , { \"name\": \"bob\" } ] } ";
 
 List<String> result = JSON.parse(input)
